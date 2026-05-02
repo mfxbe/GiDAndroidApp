@@ -1,5 +1,5 @@
 # Build with
 
-ANDROID_HOME=/home/manuel/Android/Sdk/ STUDIO_DIR=/home/manuel/Android/android-studio/ pixiewood prepare -s /home/manuel/Android/Sdk/ -a /home/manuel/Android/android-studio/ pix.xml 
-ANDROID_HOME=/home/manuel/Android/Sdk/ STUDIO_DIR=/home/manuel/Android/android-studio/ pixiewood generate
-ANDROID_HOME=/home/manuel/Android/Sdk/ STUDIO_DIR=/home/manuel/Android/android-studio/ pixiewood build
+ANDROID_HOME=ANDROID-SDK STUDIO_DIR=ANDROID-STUDIO pixiewood prepare -s ANDROID-SDK -a ANDROID-STUDIO pix.xml 
+ANDROID_HOME=ANDROID-SDK STUDIO_DIR=ANDROID-STUDIO pixiewood generate
+ANDROID_HOME=ANDROID-SDK STUDIO_DIR=ANDROID-STUDIO pixiewood build
