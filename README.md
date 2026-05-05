@@ -1,4 +1,6 @@
-# Build with
+## NOTE: This currently does not work
+
+## Build with
 ``
 ANDROID_HOME=ANDROID-SDK STUDIO_DIR=ANDROID-STUDIO pixiewood prepare -s ANDROID-SDK -a ANDROID-STUDIO pix.xml 
 ``
