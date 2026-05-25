@@ -37,7 +37,6 @@
         <build target="ant">
                 <architectures>
                         <arch>aarch64</arch>
-                        <arch>x86_64</arch>
                 </architectures>
                 <configure-options>
                         <option>--cross=cross.txt</option>
