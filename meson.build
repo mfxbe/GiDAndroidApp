@@ -1,6 +1,7 @@
 project('ant', 'd', meson_version: '>=1.9.0')
 
-add_global_arguments('-mtriple=aarch64-un-linux-android31', language : 'd')
+add_global_arguments('-mtriple=aarch64-linux-android31', language : 'd')
+#add_global_arguments('-L-fuse-ld=lld', language : 'd')
 
 dub_exe = find_program('dub', required : false)
 run_command('dub', 'run', 'dub-build-deep', '--yes', '--', 'gid:gtk4', '--compiler', 'ldc2', '--arch', 'aarch64-linux-android', check: true)
@@ -12,4 +13,4 @@ dependency('gtk4')
 
 exe = executable('ant', ['app.d'], dependencies: [
  gid_dep        
-], android_exe_type: 'application', install: true, link_args: ['-link-defaultlib-shared=false'])
+], android_exe_type: 'application', install: true, link_args: ['-link-defaultlib-shared=false', '-mtriple=aarch64-linux-android31', '-L=/home/manuel/Android/lib-android_aarch64'])
