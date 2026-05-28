@@ -1,9 +1,5 @@
 [binaries]
-d = '/usr/bin/ldc2'
-c = 'ANDROIDSDK/Sdk/ndk/30.0.14904198/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android31-clang'
-cpp = 'ANDROIDSDK/Sdk/ndk/30.0.14904198/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android31-clang++'
-ar = 'ANDROIDSDK/Sdk/ndk/30.0.14904198/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-ar'
-strip = 'ANDROIDSDK/Sdk/ndk/30.0.14904198/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-strip'
+d = 'ldc2'
 
 [host_machine]
 system = 'android'
