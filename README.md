@@ -1,6 +1,6 @@
 ## NOTE: This currently does not work
 
-This repo has the current status of my attempts to create a D-Gtk app (using [giD](https://github.com/Kymorphia/gid) that runs on Android. As of know there are still unresolved issues.
+This repo has the current status of my attempts to create a D-Gtk app (using [giD](https://github.com/Kymorphia/gid)) that runs on Android. As of know there are still unresolved issues.
 
 
 ## Prepare
