@@ -11,7 +11,7 @@ This repo has the current status of my attempts to create a D-Gtk app (using [gi
 * Have Meson installed in a way that allows you to edit parts of it to "patch" Meson (see below).
 * Make sure to use the main branch of giD.
 
-*I highly recommend using https://dlang.org/install.html to install the compiler, as the LCD2 version must fit the downloaded aarch64 library perfectly. The binaries provided in the repositories are not close enough, even if they have the same version number.
+*I highly recommend using https://dlang.org/install.html to install the LCD2, as the compiler version must fit the downloaded aarch64 library perfectly. The binaries provided in the repositories are not close enough, even if they have the same version number.
 
 ## Build with
 
