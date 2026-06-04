@@ -34,7 +34,7 @@
                 </gdk-pixbuf>
                 <gtk/>
         </dependencies>
-        <build target="gGiDAndroidApp">
+        <build target="giDAndroidApp">
                 <architectures>
                         <arch>aarch64</arch>
                 </architectures>
