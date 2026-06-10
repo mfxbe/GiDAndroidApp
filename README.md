@@ -31,6 +31,51 @@ $ pixiewood build
 
 After a successful build, you should find the resulting APKs in `.pixiewood/android/app/build/outputs/apk/debug/`. You can use adb or Android Studio to install it on an Android device. The resulting APK is also available [here](https://github.com/mfxbe/GiDAndroidApp/releases/tag/0.1).
 
+To build a Linux version of the app, you can simply run `dub build`.
+
+## Meson patch
+
+For this to work, Meson needs an addition. Add the following in `mesonbuild/compilers/d.py` below the `get_pic_args` function:
+
+```
+def get_pie_args(self):
+    return ['--relocation-model=pic']
+
+def get_pie_link_args(self):
+    return ['-L-pie']
+```
+
+Also in `mesonbuild/dependencies/dub.py`, replace `dub_arch = self.compiler.arch` with:
+
+```
+host_machine = self.env.machines.host
+dub_arch = f'{host_machine.cpu_family}-linux-{host_machine.system}'
+```
+
+
+## Still to do
+
+* Make it possible to build x86_64 APKs (usefull for emulator)
+* Get fixes directly into meson to avoid the patching
+
+---
+
+Big thanks to [elementgreen](https://github.com/elementgreen) for giD and [sp1ritCS](https://github.com/sp1ritCS) for the GTK Android backend and the GTK Android Builder and everybody else involved in any way.
+
+
+```
+$ dub build --deep --arch=aarch64-linux-android --compiler=ldc2 --build=debug
+
+$ pixiewood prepare -s ~/cmdline-tools/sdk/ -a ~/mini-studio/ pixiewood.xml
+
+$ pixiewood generate
+
+$ pixiewood build
+
+```
+
+After a successful build, you should find the resulting APKs in `.pixiewood/android/app/build/outputs/apk/debug/`. You can use adb or Android Studio to install it on an Android device. The resulting APK is also available [here](https://github.com/mfxbe/GiDAndroidApp/releases/tag/0.1).
+
 To build an Linux version of the app you can just run dub build.
 
 ## Meson patch
@@ -52,11 +97,14 @@ host_machine = self.env.machines.host
 dub_arch = f'{host_machine.cpu_family}-linux-{host_machine.system}'
 ```
 
-
 ## Still to do
 
-* Make it possible to build x86_64 APKs (usefull for emulator)
-* Get fixes directly into meson to avoid the patching
+* Make it possible to build x86_64 APKs (useful for emulator)
+* Get fixes directly into Meson to avoid patching
+
+---
+
+Big thanks to [elementgreen](https://github.com/elementgreen) for giD and [sp1ritCS](https://github.com/sp1ritCS) for the GTK Android backend and the GTK Android Builder, and everyone else involved in any way.
 
 ---
 
