@@ -1,7 +1,6 @@
 # GiDAndroidApp
 
-This repo documents an minimal example how to create a GTK app using the D programming language and [giD](https://github.com/Kymorphia/gid)) that runs on Android. As of now there are some hurdles.
-
+This repo documents an minimal example how to create a GTK app for Android using the D programming language and [giD](https://github.com/Kymorphia/gid). As of now there are some hurdles.
 
 ## Prepare
 
@@ -30,7 +29,9 @@ $ pixiewood build
 
 ```
 
-After a successful build, you should find the resulting APKs in `.pixiewood/android/app/build/outputs/apk/debug/`. You can use adb or Android Studio to install it on an Android device.
+After a successful build, you should find the resulting APKs in `.pixiewood/android/app/build/outputs/apk/debug/`. You can use adb or Android Studio to install it on an Android device. The resulting APK is also available [here](https://github.com/mfxbe/GiDAndroidApp/releases/tag/0.1).
+
+To build an Linux version of the app you can just run dub build.
 
 ## Meson patch
 
