@@ -39,10 +39,7 @@
                         <arch>aarch64</arch>
                 </architectures>
                 <configure-options>
-                        <option>--cross=cross.txt</option>
-                        <option>-Dgtk:introspection=disabled</option>
-                        <option>-Dglib:introspection=disabled</option>
-                        <option>-Dgdk-pixbuf:introspection=disabled</option>
+                        <option>--cross=crossfile.txt</option>
                 </configure-options>
         </build>
 </app>
