@@ -1,4 +1,4 @@
-project('ant', 'd', meson_version: '>=1.9.0')
+project('gidandroidapp', 'd', meson_version: '>=1.9.0')
 
 gid_dep = dependency('gid:gtk4', method: 'dub')
 
