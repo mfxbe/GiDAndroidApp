@@ -1,24 +1,28 @@
-## NOTE: This currently does not work
+# GiDAndroidApp
 
-This repo has the current status of my attempts to create a D-Gtk app (using [giD](https://github.com/Kymorphia/gid)) that runs on Android. As of now there are still unresolved issues.
+This repo documents an minimal example how to create a GTK app using the D programming language and [giD](https://github.com/Kymorphia/gid)) that runs on Android. As of now there are some hurdles.
 
 
 ## Prepare
 
 * Look at https://github.com/sp1ritCS/gtk-android-builder for the background information and install pixiewood.
-* Set up Android Studio and the SDK (Recommended Platform 31) and the NDK (Recommended Version 29).
-* Prepare [LCD2 for Android](https://wiki.dlang.org/Build_D_for_Android)* (also see ldc2.conf.ex)
+* Set up Android Studio and within it download the SDK (tested Platform 36) and the NDK (tested Version 29).¹
+* Prepare [LCD2 for Android](https://wiki.dlang.org/Build_D_for_Android)² (also see ldc2.conf.ex, remebere to set the correct path to the ndk)
 * Have Meson installed in a way that allows you to edit parts of it to "patch" Meson (see below).
-* Make sure to use the main branch of giD.
+* Make sure to use at least giD version 0.9.13.
 
-*I highly recommend using https://dlang.org/install.html to install LCD2, as the compiler version must fit the downloaded aarch64 library perfectly. The binaries provided in the Linux distribution repositories are not close enough, even if they have the same version number.
+¹ Instead of the complete Androud studio you can use [command line tools](https://developer.android.com/studio?hl=de#command-line-tools-only) (for downloading sdk and ndk) and [mini-studio](https://github.com/sp1ritCS/mini-studio).
+
+² I highly recommend using https://dlang.org/install.html to install LCD2, as the compiler version must fit the downloaded aarch64 library perfectly. The binaries provided in the Linux distribution repositories are not close enough, even if they have the same version number.
 
 ## Build with
 
-```
-$ dub build --deep --arch=aarch64-none-linux-android --compiler=/usr/bin/ldc2 --build=debug gid:gtk4
+Use the following commands to build the APK. Replace `~/cmdline-tools/sdk/` with the path to the Android SDK and `~/mini-studio/` with the path to the Studio (or mini-studio).
 
-$ ANDROID_HOME=ANDROIDSDK STUDIO_DIR=ANDROIDSTUDIO pixiewood prepare -s ANDROIDSDK -a ANDROIDSTUDIO pix.xml # Set ANDROIDSDK and ANDROIDSTUDIO to the correct paths.
+```
+$ dub build --deep --arch=aarch64-linux-android --compiler=ldc2 --build=debug
+
+$ pixiewood prepare -s ~/cmdline-tools/sdk/ -a ~/mini-studio/ pixiewood.xml
 
 $ pixiewood generate
 
@@ -26,7 +30,7 @@ $ pixiewood build
 
 ```
 
-After a successful build, you should find the resulting APKs in `.pixiewood/android/app/build/outputs/apk/debug/`.
+After a successful build, you should find the resulting APKs in `.pixiewood/android/app/build/outputs/apk/debug/`. You can use adb or Android Studio to install it on an Android device.
 
 ## Meson patch
 
@@ -40,8 +44,19 @@ def get_pie_link_args(self):
     return ['-L-pie']
 ```
 
-And least but not last the "weirdest" thing: In `mesonbuild/dependencies/dub.py` replace alle usages of `dub_arch` with the target from the ldc2 config. Havent found a better way yet.
+Also in `mesonbuild/dependencies/dub.py` replace `dub_arch = self.compiler.arch` with
 
-## Current Issues
+```
+host_machine = self.env.machines.host
+dub_arch = f'{host_machine.cpu_family}-linux-{host_machine.system}'
+```
 
-* Segmentation Fault at startup
+
+## Still to do
+
+* Make it possible to build x86_64 APKs (usefull for emulator)
+* Get fixes directly into meson to avoid the patching
+
+---
+
+Big thanks to [elementgreen](https://github.com/elementgreen) for giD and [sp1ritCS](https://github.com/sp1ritCS) for the GTK Android backend and the GTK Android Builder and everybody else involved in any way.
