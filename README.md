@@ -104,8 +104,4 @@ dub_arch = f'{host_machine.cpu_family}-linux-{host_machine.system}'
 
 ---
 
-Big thanks to [elementgreen](https://github.com/elementgreen) for giD and [sp1ritCS](https://github.com/sp1ritCS) for the GTK Android backend and the GTK Android Builder, and everyone else involved in any way.
-
----
-
 Big thanks to [elementgreen](https://github.com/elementgreen) for giD and [sp1ritCS](https://github.com/sp1ritCS) for the GTK Android backend and the GTK Android Builder and everybody else involved in any way.
