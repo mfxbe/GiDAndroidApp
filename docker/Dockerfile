@@ -77,6 +77,8 @@ export PATH="$PATH:$ANDROID_HOME/build-tools"
 export PATH="$PATH:$ANDROID_HOME/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-x86_64/bin"
 EOF
 
+RUN cd ~/ && git clone https://github.com/sp1ritCS/mini-studio.git
+
 RUN mkdir -p ~/dlang && wget https://dlang.org/install.sh -O ~/dlang/install.sh && chmod 755 ~/dlang/install.sh
 
 RUN ~/dlang/install.sh ldc
@@ -86,3 +88,5 @@ RUN echo ". ~/dlang/ldc-1.42.0/activate" >> ~/.bashrc
 
 COPY meson.patch /root
 RUN cd / && patch -p0 </root/meson.patch
+
+COPY ldc2.conf /root/dlang/ldc-1.42.0/etc/ldc2.conf/40-android.conf
