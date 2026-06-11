@@ -17,13 +17,12 @@ To build the docker image, ensure you have docker installed and then run:
 docker build -t gid-android-builder docker
 ```
 
-### Running the image
+### Running the docker container
 
 To run the image change to the directory of your D application (or this test application) and run:
 
 ```sh
-docker run --rm -it -v $pwd:/build gid-android-builder /bin/bash
-cd /build
+docker run --rm -it -v $(pwd):/build -w /build gid-android-builder /bin/bash
 ```
 
 You should then be able to follow the steps in the [Build with](#build-with) section.
