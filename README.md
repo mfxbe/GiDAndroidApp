@@ -46,7 +46,7 @@ Use the following commands to build the APK. Replace `~/cmdline-tools/sdk/` with
 ```
 $ dub build --deep --arch=aarch64-linux-android --compiler=ldc2 --build=debug
 
-$ pixiewood prepare -s ~/cmdline-tools/sdk/ -a ~/mini-studio/ pixiewood.xml
+$ pixiewood prepare -s $ANDROID_HOME -a ~/mini-studio/ pixiewood.xml
 
 $ pixiewood generate
 
