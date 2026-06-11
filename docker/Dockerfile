@@ -42,14 +42,18 @@ RUN cd ~/Android/Sdk/cmdline-tools \
   && unzip commandlinetools-linux-14742923_latest.zip \
   && mv cmdline-tools latest
 
-RUN echo "export ANDROID_HOME=$HOME/Android/Sdk \
-  export ANDROID_SDK_ROOT=$ANDROID_HOME \
-  export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin \
-  export PATH=$PATH:$ANDROID_HOME/platform-tools \
-  export PATH=$PATH:$ANDROID_HOME/build-tools \
-" >> ~/.bashrc
+  # Set Android environment variables (best practice for Docker)
+ENV ANDROID_HOME=/root/Android/Sdk \
+    ANDROID_SDK_ROOT=/root/Android/Sdk \
+    ANDROID_NDK_HOME=/root/Android/Sdk/ndk/27.3.13750724
 
-RUN . ~/.bashrc && cd $ANDROID_HOME/cmdline-tools/latest/bin \
+# Add the important directories to PATH
+ENV PATH="${PATH}:${ANDROID_HOME}/cmdline-tools/latest/bin" \
+    PATH="${PATH}:${ANDROID_HOME}/platform-tools" \
+    PATH="${PATH}:${ANDROID_HOME}/build-tools" \
+    PATH="${PATH}:${ANDROID_HOME}/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-x86_64/bin"
+
+RUN cd $ANDROID_HOME/cmdline-tools/latest/bin \
   && yes | ./sdkmanager --licenses \
   && ./sdkmanager --update \
   && ./sdkmanager \
@@ -58,6 +62,20 @@ RUN . ~/.bashrc && cd $ANDROID_HOME/cmdline-tools/latest/bin \
     "platforms;android-36" \
     "cmake;3.22.1" \
   && ./sdkmanager "ndk;29.0.14206865"
+
+# Optional: Also update root's .bashrc for interactive shell sessions
+RUN cat >> /root/.bashrc << 'EOF'
+
+# Android SDK
+export ANDROID_HOME=/root/Android/Sdk
+export ANDROID_SDK_ROOT=$ANDROID_HOME
+export ANDROID_NDK_HOME=$ANDROID_HOME/ndk/27.3.13750724
+
+export PATH="$PATH:$ANDROID_HOME/cmdline-tools/latest/bin"
+export PATH="$PATH:$ANDROID_HOME/platform-tools"
+export PATH="$PATH:$ANDROID_HOME/build-tools"
+export PATH="$PATH:$ANDROID_HOME/ndk/27.3.13750724/toolchains/llvm/prebuilt/linux-x86_64/bin"
+EOF
 
 RUN mkdir -p ~/dlang && wget https://dlang.org/install.sh -O ~/dlang/install.sh && chmod 755 ~/dlang/install.sh
 
