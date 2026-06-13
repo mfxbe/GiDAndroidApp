@@ -2,7 +2,35 @@
 
 This repo documents an minimal example how to create a GTK app for Android using the D programming language and [giD](https://github.com/Kymorphia/gid). As of now there are some hurdles.
 
+## Building with docker
+
+The easiest way to build the example GiDAndroidApp is to use make to build the docker image,
+run a container, and then build the application from within the container.
+
+**NOTE:** Building the image automatically accepts the Android SDK licenses. The output of the build command will show these licenses.
+Making use of the docker image assumes your acceptance of the applicable licenses.
+
+Ensure that docker and GNU make are installed and run the following commands:
+
+```sh
+make docker-image
+make docker-run
+make android-build
+```
+
+The **android-build** target is run from within the docker container.
+
+### Clean environment
+
+To clean the build environment and remove all build artificats run:
+
+```sh
+make clean
+```
+
 ## Prepare
+
+The remaining sections provide information on manually setting up the build environment, rather than using the docker image.
 
 * Look at https://github.com/sp1ritCS/gtk-android-builder for the background information and install pixiewood.
 * Set up Android Studio and within it download the SDK (tested Platform 36) and the NDK (tested Version 29).¹
@@ -21,7 +49,7 @@ Use the following commands to build the APK. Replace `~/cmdline-tools/sdk/` with
 ```
 $ dub build --deep --arch=aarch64-linux-android --compiler=ldc2 --build=debug
 
-$ pixiewood prepare -s ~/cmdline-tools/sdk/ -a ~/mini-studio/ pixiewood.xml
+$ pixiewood prepare -s $ANDROID_HOME -a ~/mini-studio/ pixiewood.xml
 
 $ pixiewood generate
 
@@ -52,55 +80,10 @@ host_machine = self.env.machines.host
 dub_arch = f'{host_machine.cpu_family}-linux-{host_machine.system}'
 ```
 
-
 ## Still to do
 
 * Make it possible to build x86_64 APKs (usefull for emulator)
 * Get fixes directly into meson to avoid the patching
-
----
-
-Big thanks to [elementgreen](https://github.com/elementgreen) for giD and [sp1ritCS](https://github.com/sp1ritCS) for the GTK Android backend and the GTK Android Builder and everybody else involved in any way.
-
-
-```
-$ dub build --deep --arch=aarch64-linux-android --compiler=ldc2 --build=debug
-
-$ pixiewood prepare -s ~/cmdline-tools/sdk/ -a ~/mini-studio/ pixiewood.xml
-
-$ pixiewood generate
-
-$ pixiewood build
-
-```
-
-After a successful build, you should find the resulting APKs in `.pixiewood/android/app/build/outputs/apk/debug/`. You can use adb or Android Studio to install it on an Android device. The resulting APK is also available [here](https://github.com/mfxbe/GiDAndroidApp/releases/tag/0.1).
-
-To build an Linux version of the app you can just run dub build.
-
-## Meson patch
-
-For this to work Meson needs an addition. Add the following in `mesonbuild/compilers/d.py` below the `get_pic_args` function
-
-```
-def get_pie_args(self):
-    return ['--relocation-model=pic']
-
-def get_pie_link_args(self):
-    return ['-L-pie']
-```
-
-Also in `mesonbuild/dependencies/dub.py` replace `dub_arch = self.compiler.arch` with
-
-```
-host_machine = self.env.machines.host
-dub_arch = f'{host_machine.cpu_family}-linux-{host_machine.system}'
-```
-
-## Still to do
-
-* Make it possible to build x86_64 APKs (useful for emulator)
-* Get fixes directly into Meson to avoid patching
 
 ---
 

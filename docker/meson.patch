@@ -1,0 +1,27 @@
+--- venv/lib/python3.14/site-packages/mesonbuild/dependencies/dub.py.orig	2026-06-11 14:58:32.719968498 +0000
++++ venv/lib/python3.14/site-packages/mesonbuild/dependencies/dub.py	2026-06-11 15:01:52.504233189 +0000
+@@ -121,7 +121,8 @@
+                    '{!r}'.format(name, self.dubbin.get_path()))
+ 
+         # we need to know the target architecture
+-        dub_arch = self.compiler.arch
++        host_machine = self.env.machines.host
++        dub_arch = f'{host_machine.cpu_family}-linux-{host_machine.system}'
+ 
+         # we need to know the build type as well
+         dub_buildtype = str(environment.coredata.optstore.get_value_for(OptionKey('buildtype')))
+--- venv/lib/python3.14/site-packages/mesonbuild/compilers/d.py.orig	2026-06-11 14:58:32.714413070 +0000
++++ venv/lib/python3.14/site-packages/mesonbuild/compilers/d.py	2026-06-11 15:01:52.504035303 +0000
+@@ -166,6 +166,12 @@
+             return []
+         return ['-fPIC']
+ 
++    def get_pie_args(self):
++       return ['--relocation-model=pic']
++
++    def get_pie_link_args(self):
++        return ['-L-pie']
++
+     def get_optimization_link_args(self, optimization_level: str) -> T.List[str]:
+         if optimization_level != 'plain':
+             return self._get_target_arch_args()
