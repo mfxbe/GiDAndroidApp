@@ -2,5 +2,5 @@
 d = 'ldc2'
 
 [properties]
-d_args = ['-mtriple=aarch64-none-linux-android']
-d_link_args = ['-mtriple=aarch64-none-linux-android']
+d_args = ['--mtriple', arch + '-none-linux-android']
+d_link_args = ['--mtriple', arch + '-none-linux-android']

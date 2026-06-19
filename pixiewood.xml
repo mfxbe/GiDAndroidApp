@@ -22,21 +22,16 @@
                 </icon>
         </style>
         <dependencies>
-                <glib revison="2.80.0">
+                <glib>
                         <patch>hack</patch>
                 </glib>
                 <fontconfig/>
-                <rsvg revision="librsvg-2.40">
-                        <patch>meson-for-gdkpixbuf</patch>
-                </rsvg>
-                <gdk-pixbuf>
-                        <patch>rsvg</patch>
-                </gdk-pixbuf>
                 <gtk/>
         </dependencies>
         <build target="giDAndroidApp">
                 <architectures>
                         <arch>aarch64</arch>
+                        <arch>x86_64</arch>
                 </architectures>
                 <configure-options>
                         <option>--cross=crossfile.txt</option>

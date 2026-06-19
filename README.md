@@ -34,9 +34,10 @@ The remaining sections provide information on manually setting up the build envi
 
 * Look at https://github.com/sp1ritCS/gtk-android-builder for the background information and install pixiewood.
 * Set up Android Studio and within it download the SDK (tested Platform 36) and the NDK (tested Version 29).¹
-* Prepare [LCD2 for Android](https://wiki.dlang.org/Build_D_for_Android)² (also see ldc2.conf.ex, remebere to set the correct path to the ndk)
+* Prepare [LCD2 for Android](https://wiki.dlang.org/Build_D_for_Android)² (also see ldc2.conf.ex, remebere to set the correct path to the ndk) make sure to follow the instructions for arch64 and then do the same for the x86_64
 * Have Meson installed in a way that allows you to edit parts of it to "patch" Meson (see below).
 * Make sure to use at least giD version 0.9.13.
+* If you like to only build aarch64 or x86_64 remove the other architecture from the pixiewood.xml file
 
 ¹ Instead of the complete Androud studio you can use [command line tools](https://developer.android.com/studio?hl=de#command-line-tools-only) (for downloading sdk and ndk) and [mini-studio](https://github.com/sp1ritCS/mini-studio).
 
@@ -48,6 +49,7 @@ Use the following commands to build the APK. Replace `~/cmdline-tools/sdk/` with
 
 ```
 $ dub build --deep --arch=aarch64-linux-android --compiler=ldc2 --build=debug
+$ dub build --deep --arch=x86_64-linux-android --compiler=ldc2 --build=debug
 
 $ pixiewood prepare -s $ANDROID_HOME -a ~/mini-studio/ pixiewood.xml
 
@@ -57,7 +59,7 @@ $ pixiewood build
 
 ```
 
-After a successful build, you should find the resulting APKs in `.pixiewood/android/app/build/outputs/apk/debug/`. You can use adb or Android Studio to install it on an Android device. The resulting APK is also available [here](https://github.com/mfxbe/GiDAndroidApp/releases/tag/0.1).
+After a successful build, you should find the resulting APKs in `.pixiewood/android/app/build/outputs/apk/debug/`. You can use adb or Android Studio to install it on an Android device or to try it in an emualtor. The resulting bundeled APK of this example is also available [here](https://github.com/mfxbe/GiDAndroidApp/releases/tag/0.2).
 
 To build a Linux version of the app, you can simply run `dub build`.
 
@@ -82,7 +84,7 @@ dub_arch = f'{host_machine.cpu_family}-linux-{host_machine.system}'
 
 ## Still to do
 
-* Make it possible to build x86_64 APKs (usefull for emulator)
+* Make it possible to build x86_64 APKs in Docker as well (usefull for emulator)
 * Get fixes directly into meson to avoid the patching
 
 ---
