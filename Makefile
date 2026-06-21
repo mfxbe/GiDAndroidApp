@@ -11,6 +11,7 @@ docker-run: docker-image
 .PHONY: android-build
 android-build:
 	dub build --deep --arch=aarch64-linux-android --compiler=ldc2 --build=debug
+	dub build --deep --arch=x86_64-linux-android --compiler=ldc2 --build=debug
 	pixiewood prepare -s ${ANDROID_HOME} -a ~/mini-studio/ pixiewood.xml
 	pixiewood generate
 	pixiewood build
