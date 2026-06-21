@@ -84,7 +84,6 @@ dub_arch = f'{host_machine.cpu_family}-linux-{host_machine.system}'
 
 ## Still to do
 
-* Make it possible to build x86_64 APKs in Docker as well (usefull for emulator)
 * Get fixes directly into meson to avoid the patching
 
 ---
