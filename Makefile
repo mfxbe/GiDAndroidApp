@@ -2,11 +2,11 @@ all: docker-image
 
 .PHONY: docker-image
 docker-image:
-	docker build -t gid-android-builder docker
+	podman build -t gid-android-builder docker
 
 .PHONY: docker-run
 docker-run: docker-image
-	docker run --rm -it -v $$(pwd):/build -w /build -u $$(id -u):$$(id -g) gid-android-builder /bin/bash
+	podman run --userns=keep-id --rm -it -v $$(pwd):/build -w /build -u $$(id -u):$$(id -g) gid-android-builder /bin/bash
 
 .PHONY: android-build
 android-build:
